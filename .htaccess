@@ -1,0 +1,14 @@
+#在这个文件中写我们需要的rewrite规则( 可以设置多个规则  优先顺序是由上到下 )
+
+#判断是否启用了rewrite模块机制( 防止当模块未启用时，这里报错 )
+<IfModule rewrite_module>
+
+RewriteEngine On
+#news-id(\d+)\.html$ 是规则(该.html文件是不管请求路径的 因为该文件实际上是不存在的)     
+#version5/view/show_news.php?id=$1 是转发的页面( 管路径 此路径必须是从当前这个rewrite规则配置文件开始计算 )
+
+RewriteRule submit\.html$   submit.php
+
+
+
+</IfModule>

@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="utf-8">
+	<meta keywords="引航 引航团队 文华引航 文华引航团队">
+	<meta name="discription" content="引航是一个以学生为中心、以项目为驱动的专注于提升学生开发能力和进行实际应用开发的创新型团队">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>引航团队</title>
+	<script type="text/javascript">
+		//浏览器的宽高
+		var browser_height= 0;
+		var browser_width= 0;
+		//当前所在的div块
+		var current_div;
+		//下一个出现的div块
+		var next_div;
+		//当前是否正在进行页面滚动
+		var temp=false;
+		//当前菜单项
+		var now_menu_item= 0;
+		var now_menu;
+		//当前焦点小圆圈
+		var now_carousel_item= 0;
+		var now_carousel;
+
+		window.onload=function(){
+			
+			//禁止低版本IE浏览器 打开网页
+			/*var ua=navigator.userAgent.toLowerCase();
+			var s=null;
+			var browser={
+				msie:(s=ua.match(/msie/s*([/d/.]+)/))?s[1]:false
+			    firefox:(s=ua.match(/firefox//([/d/.]+)/))?s[1]:false,  
+			    chrome:(s=ua.match(/chrome//([/d/.]+)/))?s[1]:false,  
+			    opera:(s=ua.match(/opera.([/d/.]+)/))?s[1]:false,  
+			    safari:(s=ua.match(/varsion//([/d/.]+).*safari/))?s[1]:false
+			};*/
+			
+			
+			//只允许IE 10.0以上的版本 打开网页
+			if(document.all){
+				if(navigator.appVersion.match(/6./i)=="6."){
+					window.location.href="./tip.html";
+				}else if(navigator.appVersion.match(/7./i)=="7."){
+					window.location.href="./tip.html";
+				}else if(navigator.appVersion.match(/8./i)=="8."){
+					window.location.href="./tip.html";
+				}else if(navigator.appVersion.match(/9./i)=="9."){
+					window.location.href="./tip.html";
+				}else{
+					//alert("IE： "+navigator.appVersion);
+				}
+			}
+			init();
+		}
+	</script>
+	<link href="./bootstrap-3.2.0-dist/css/bootstrap.min.css" rel="stylesheet">
+
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+	<style type="text/css">
+		body{
+			padding: 0px;
+			margin: 0px;
+			overflow: hidden;
+		}
+		.contents_bg{
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			top: 0px;
+			left: 0px;
+		}
+		.show_div{
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			display: block;
+		}
+		.hidden_divs{
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			display: none;
+		}
+
+
+		.menu_div{
+			width: 100%;
+			height: 52px;
+			background-color: black;
+			opacity: 0.2;
+			position: fixed;
+			top: 0px;
+			left: 0px;
+			z-index: 400;
+		}
+		.menu_logo{
+			width: auto;
+			height: 44px;
+			position: fixed;
+			top: 0px;
+			left: 180px;
+			z-index: 401;
+		}
+		.menu_logo img{
+			width: auto;
+			height: 100%;
+			margin-top: 3px;
+		}
+
+
+		.menu_div .menu_items{
+			width: 55%;
+			height: 100%;
+			float: right;
+		}
+		.menu_div .menu_items .now_menu{
+			display: block;
+			float: right;
+			font-size: 20px;
+			color: white;
+			text-decoration: none;
+			width: 60px;
+			height: 90%;
+			text-align: center;
+			padding-top: 12px;
+			margin-right: 8%;
+			border-bottom: 3px solid white;
+		}
+		.menu_div .menu_items .now_menu:hover{
+			border-bottom: 3px solid white;
+			color: gray;
+		}
+		.menu_div .menu_items .menus{
+			display: block;
+			float: right;
+			font-size: 20px;
+			color: white;
+			text-decoration: none;
+			width: 60px;
+			height: 90%;
+			text-align: center;
+			padding-top: 12px;
+			margin-right: 8%;
+		}
+		.menu_items a div{
+			position: relative;
+			width: 0%;
+			height: 100%;
+			top: -78%;
+			margin-left: 50%;
+			border-bottom: 3px solid white;
+			-webkit-transition: width 0.6s ease-in, margin-left 0.6s;
+		}
+		.menu_div .menu_items .menus:hover .menu_animation_divs{
+			width: 100%;
+			margin-left: 0%;
+		}
+		.footer_div{
+			text-align: center;
+			width: 100%;
+			height: 38px;
+			background-color: black;
+			opacity: 0.4;
+			position: fixed;
+			bottom: 0px;
+			left: 0px;
+			z-index: 400;
+		}
+		.footer_div p{
+			padding-top: 8px;
+			color: white;
+			font-size: 15px;
+			font-weight: bold;
+		}
+
+
+	    #summary-container1{
+	    	margin-top: 110px;
+	    }
+	    #container-left{
+	    	margin-left: 40px;
+	    }
+	    #container-right{
+	    	margin-left: 120px;
+	    }
+	    #container-right textarea{
+	    	margin-top: 40px;
+	    	width: 420px;
+	    }
+	    #container-right div{
+	    	width: 400px;
+	    	height: auto;
+	    }
+	    #container-right div .contact_title{
+	    	color: gray;
+	    	font-weight: bold;
+	    	border-bottom: 1px solid gray;
+	    	font-size: 20px;
+	    	padding-bottom: 4px;
+	    	margin-bottom: 15px;
+	    	width: 368px;
+	    }
+	    #container-right div p{
+	    	color: gray;
+	    	font-size: 18px;
+	    }
+	    .row div div{
+	    	margin-top: 20px;
+	    }
+	    #name span{
+	    	display: block;
+	    	float: left;
+	    	font-size: 20px;
+	    	color: gray;
+	    	margin-top: 22px;
+	    }
+	    #name div{
+	    	width: 230px;
+	    }
+	    #sex{
+	    	clear: both;
+	    	margin-top: 90px;
+	    }
+	    #sex span{
+	    	display: block;
+	    	float: left;
+	    	font-size: 20px;
+	    	color: gray;
+	    	margin-top: 10px;
+	    }
+	    #sex div .sex1{
+	    	margin-top: 18px;
+	    	margin-left: 20px;
+	    }
+	    #sex div .sex2{
+	    	margin-top: 18px;
+	    	margin-left: 40px;
+	    }
+	    #level span{
+	    	display: block;
+	    	float: left;
+	    	font-size: 20px;
+	    	color: gray;
+	    	margin-top: 6px;
+	    	margin-left: -93px;
+
+	    }
+	    #level div{
+	    	width: 230px;
+	    	margin-top: 4px;
+	    }
+	    #phone{
+	    	clear: both;
+	    }
+	    #phone span{
+	    	display: block;
+	    	float: left;
+	    	font-size: 20px;
+	    	color: gray;
+	    	margin-top: 30px;
+	    	margin-left: -40px;
+	    }
+	    #phone div{
+	    	width: 230px;
+	    	margin-top: 30px;
+	    }
+	    #learn-type{
+	    	clear: both;
+	    	margin-top: 115px;
+	    }
+	    #learn-type span{
+	    	display: block;
+	    	float: left;
+	    	font-size: 20px;
+	    	color: gray;
+	    	margin-left: -40px;
+	    	margin-top: -5px;
+	    }
+	    #learn-type div .type1{
+	    	margin-left: 12px;
+	    }
+	    #learn-type div .type2{
+	    	margin-left: 45px;
+	    }
+	    #learn-type div .type3{
+	    	margin-top: 10px;
+	    	margin-left: 12px;
+	    }
+	    #learn-type div .type4{
+	    	margin-top: 10px;
+	    	margin-left: 25px;
+	    }
+
+	    #submit_but{
+	    	clear: both;
+	    }
+	    #submit_but input{
+	    	width: 200px;
+	    	margin-left: 60px;
+	    }
+
+	    #cut_carousel{
+	    	width: 290px;
+	    	height: auto;
+	    	position: fixed;
+	    	top: 95%;
+	    	left: 38%;
+	    	z-index: 200;
+	    }
+	    .cut_carousel_hidden{
+	    	display: none;
+	    }
+	    .cut_carousel_show{
+	    	display: block;
+	    }
+	    #cut_carousel ol li{
+	    	margin-left: 20px;
+	    }
+	    #cut_carousel ol li:hover{
+	    	background-color: white;
+	    }
+	    #content7 .carousel-indicators{
+	    	margin-bottom: 46px;
+	    }
+	    .carousel-indicators li{
+	    	width: 18px;
+	    	height: 18px;
+	    }
+	    .carousel-indicators .active{
+	    	width: 18px;
+	    	height: 18px;
+	    }
+
+	    #carousel-example-generic{
+	        width: 100%;
+	        overflow: hidden;
+	        height: 100%;
+	    }
+	    #carousel-example-generic div div img{
+	        width: auto;
+	        height: 100%;
+	    }
+	    #content7 ol li{
+	    	margin-left: 15px;
+	    }
+	    #content8{
+	    	
+	    }
+
+
+	   
+	    #content1 .row{
+	    	width: 100%;
+	    	height: auto;
+	    	position: absolute;
+	    	top: 0px;
+	    	left: 0px;
+	    	z-index: 300;
+	    	text-align: center;
+	    }
+	    #content1 .row p{
+	    	color: white;
+	    }
+	    #content1 .row #join_us_div{
+	    	text-align: center;
+	    	margin-left: 47%;
+	    	margin-top: 29%;
+	    }
+	    #row1{
+	    	font-size: 53px;
+	    	margin-top: 15%;
+	    	
+	    	margin-left: 0.5%;
+	    }
+	    #row2{
+	    	font-size: 32px;
+	    	margin-top: 22%;
+	    	
+	    	margin-left: 0.5%;
+	    }
+	  
+
+
+		#container2{
+			z-index: 300;
+	    	position: absolute;
+	    	top: 0px;
+	    	left: 0px;
+		}
+		#container2 .row div .content2_p1{
+	    	margin-top: 120px;
+	    	font-size: 19px;
+	    	text-indent: 39px;
+	    	color: white;
+	    }
+	    #container2 .row div .content2_p2{
+	    	font-size: 19px;
+	    	text-indent: 39px;
+	    	color: white;
+	    }
+	    #container2 .row div .content2_p3{
+	    	font-size: 19px;
+	    	text-indent: 39px;
+	    	color: white;
+	    }
+
+	    .contents_div3 img{
+	    	width: auto;
+	    	height: auto;
+	    	z-index: 400;
+	    	position: absolute;
+	    	bottom: 110px;
+	    	left: -700px;
+	    	display: none;
+	    }
+	    .contents_div3 p{
+	    	width: 360px;
+	    	height: auto;
+	    	z-index: 400;
+	    	position: absolute;
+	    	bottom: 122px;
+	    	left: 1620px;
+	    	font-size: 18px;
+	    	color: white;
+	    	display: none;
+	    }
+	    .contents_div3 div{
+	    	width: 380px;
+	    	height: 150px;
+	    	position: absolute;
+	    	bottom: 122px;
+	    	left: 690px;
+	    	z-index: 388;
+	    	background-color: gray;
+	    	opacity: 0.2;
+	    	border-radius: 6px;
+	    	padding: 4px 2px 4px 8px;
+	    	display: none;
+	    }
+	    .contents_div4 img{
+	    	width: auto;
+	    	height: auto;
+	    	z-index: 400;
+	    	position: absolute;
+	    	bottom: 110px;
+	    	left: -700px;
+	    	display: none;
+	    }
+	    .contents_div4 p{
+	    	width: 350px;
+	    	height: auto;
+	    	z-index: 400;
+	    	position: absolute;
+	    	bottom: 110px;
+	    	left: 1620px;
+	    	font-size: 18px;
+	    	color: white;
+	    	display: none;
+	    }
+	    .contents_div4 div{
+	    	width: 380px;
+	    	height: 150px;
+	    	position: absolute;
+	    	bottom: 107px;
+	    	left: 785px;
+	    	z-index: 388;
+	    	background-color: gray;
+	    	opacity: 0.4;
+	    	border-radius: 6px;
+	    	padding: 4px 2px 4px 8px;
+	    	display: none;
+	    }
+	    .contents_div5 img{
+	    	width: auto;
+	    	height: auto;
+	    	z-index: 400;
+	    	position: absolute;
+	    	bottom: 200px;
+	    	left: -700px;
+	    	display: none;
+	    }
+	    .contents_div5 p{
+	    	width: 490px;
+	    	height: auto;
+	    	z-index: 400;
+	    	position: absolute;
+	    	bottom: 110px;
+	    	left: 1620px;
+	    	font-size: 18px;
+	    	color: white;
+	    	display: none;
+	    }
+	    .contents_div5 div{
+	    	width: 500px;
+	    	height: 110px;
+	    	position: absolute;
+	    	bottom: 115px;
+	    	left: 453px;
+	    	z-index: 388;
+	    	background-color: gray;
+	    	opacity: 0.2;
+	    	border-radius: 6px;
+	    	padding: 4px 2px 4px 8px;
+	    	display: none;
+	    }
+	    .contents_div6 img{
+	    	width: auto;
+	    	height: auto;
+	    	z-index: 400;
+	    	position: absolute;
+	    	bottom: 110px;
+	    	left: -700px;
+	    	display: none;
+	    }
+	    .contents_div6 p{
+	    	width: 380px;
+	    	height: auto;
+	    	z-index: 400;
+	    	position: absolute;
+	    	bottom: 110px;
+	    	left: 1620px;
+	    	font-size: 18px;
+	    	color: white;
+	    	display: none;
+	    }
+	    .contents_div6 div{
+	    	width: 397px;
+	    	height: 144px;
+	    	position: absolute;
+	    	bottom: 110px;
+	    	left: 690px;
+	    	z-index: 388;
+	    	background-color: gray;
+	    	opacity: 0.2;
+	    	border-radius: 6px;
+	    	padding: 4px 2px 4px 8px;
+	    	display: none;
+	    }
+	    #content3_img:hover{
+	    	-webkit-animation:myfirst  2s linear 0s infinite normal; 
+	    }
+	    #content4_img:hover{
+	    	-webkit-animation:myfirst  2s linear 0s infinite normal; 
+	    }
+	    #content5_img:hover{
+	    	-webkit-animation:myfirst  2s linear 0s infinite normal; 
+	    }
+	    #content6_img:hover{
+	    	-webkit-animation:myfirst  2s linear 0s infinite normal; 
+	    }
+	    @-webkit-keyframes myfirst /* Safari and Chrome */
+		{
+			from{
+				-webkit-transform:rotateZ(0deg);
+			}
+			to{
+				-webkit-transform:rotateZ(360deg);
+			}
+		}
+
+
+
+
+		#join_us{
+			margin-top: 1.4%;
+		}
+		#join_us_div{
+			width: 112px;
+			height: 112px;
+			border-radius: 56px;
+			margin: 88% 0px 0px 105px;
+			color: white;
+			font-size: 22px;
+			text-align: center;
+			padding-top: 41px;
+			font-weight: bold;
+			cursor: pointer;
+			border: 3px solid #fff;
+			-webkit-transition: background-color 0.8s ease-in;
+		}
+		#join_us_div:hover{
+			background-color: #6BD56D;
+		}
+
+
+		.img1{
+			position: relative;
+			bottom: 129px;
+			left: -57px;
+			height: auto;
+			width: 220px;
+			animation:myfirst 1.5s linear 0s infinite normal;
+			-webkit-animation:myfirst  1.5s linear 0s infinite normal; /* Safari and Chrome: */
+		}
+		.img2{
+			position: relative;
+			bottom: 349px;
+			left: -57px;
+			height: auto;
+			width: 220px;
+			animation:myfirst 2.5s linear 0s infinite normal;
+			-webkit-animation:myfirst  1.5s linear 0s infinite normal; /* Safari and Chrome: */
+		}
+		.img1_2{
+			position: relative;
+			bottom: 129px;
+			left: -57px;
+			height: auto;
+			width: 220px;
+			animation:myfirst2 0.6s linear 0s infinite normal;
+			-webkit-animation:myfirst2  0.6s linear 0s infinite normal;
+		}
+		.img2_2{
+			position: relative;
+			bottom: 349px;
+			left: -57px;
+			height: auto;
+			width: 220px;
+			animation:myfirst2 0.8s linear 0s infinite normal;
+			-webkit-animation:myfirst2  0.8s linear 0s infinite normal;
+		}
+		@-webkit-keyframes myfirst /* Safari and Chrome */
+		{
+			from{
+				-webkit-transform:rotateZ(0deg);
+			}
+			to{
+				-webkit-transform:rotateZ(360deg);
+			}
+		}
+		@-webkit-keyframes myfirst2 /* Safari and Chrome */
+		{
+			from{
+				-webkit-transform:rotateZ(0deg);
+			}
+			to{
+				-webkit-transform:rotateZ(-360deg);
+			}
+		}
+
+	</style>
+</head>
+<body>
+	<div class="menu_logo">
+		<img src="./images/logo.png">
+	</div>
+	<div class="menu_div">
+		<div class="menu_items">
+			<a href="javascript:void(0);" onclick="menus_cut(this)" class="menus" id="menu5">招新<div class="menu_animation_divs"></div></a>
+			<a href="javascript:void(0);" onclick="menus_cut(this)" class="menus" id="menu4">作品<div class="menu_animation_divs"></div></a>
+			<a href="javascript:void(0);" onclick="menus_cut(this)" class="menus" id="menu3">组别<div class="menu_animation_divs"></div></a>
+			<a href="javascript:void(0);" onclick="menus_cut(this)" class="menus" id="menu2">简介<div class="menu_animation_divs"></div></a>
+			<a href="javascript:void(0);" onclick="menus_cut(this)" class="now_menu" id="menu1">首页<div class="menu_animation_divs"></div></a>
+		</div>
+	</div>
+
+	<div class="footer_div">
+		<p>&copy; 2014-9-28 文华学院引航团队 王帆</p>
+	</div>
+
+
+
+	<div id="content1" class="show_div">
+	    <div class="row" id="row1">
+	        <p class="content1_p1">引领莘莘学子, 航向胜利彼岸</p>
+	    </div>
+	    <div class="row" id="row2">
+	        <p class="content1_p2">引航,旨在引领大家找到自己的方向,向着自己的目标不断前进</p>
+	    </div>
+	    <div class="row" id="join_us">
+	        <div id="join_us_div" onclick="joinUs()" onmouseover="mouseover()" onmouseout="mouseout()">加入我们
+	         	<img id="animate_img1" class="img1" src="./images/page2_main_3.png">
+				<img id="animate_img2" class="img2" src="./images/page2_main_2.png">
+	        </div>
+	    </div>
+	    <img class="contents_bg home_bg" src="./images/home.jpg">
+	</div>
+	<div id="content2" class="hidden_divs">
+		<div class="container" id="container2">
+	        <div class="row">
+	            <div class="col-md-7 col-md-push-5">
+	              	<p class="content2_p1">引航团队(YH-team)是一支以项目为主要驱动&nbsp;&nbsp;注重成员实际开发能力的创新型团队. 团队由廖剑锋老师于1993年创办, 经过这些年的发展, 团队帮助很多同学找到了自己的方向.</p>
+	            </div>
+	        </div>
+	        <div class="row">
+	            <div class="col-md-7 col-md-push-5">
+	            	<br/>
+	              	<p class="content2_p2">团队特色: &nbsp;&nbsp;①团队丰富的人才类型&nbsp;&nbsp;&nbsp;②团队实行严格、明确的制度化管理  ③团队内部定期进行交流分享会 ④团队具有明确且实际的方向和目标</p>
+	            </div>
+	        </div>
+	        <div class="row">
+	            <div class="col-md-7 col-md-push-5">
+	            	<br/>
+	              	<p class="content2_p3">团队宗旨: 团队以队员为核心，尊重每个人的个性化发展</p>
+	            </div>
+	        </div>
+	    </div>
+		<img class="contents_bg" src="./images/team1.jpg">
+	</div>
+
+	<div id="cut_carousel" class="cut_carousel_hidden">
+		<ol class="carousel-indicators">
+		    <li id="carousel3" onclick="carousel_cut(this)" data-slide-to="0" class="active"></li>
+		    <li id="carousel4" onclick="carousel_cut(this)" data-slide-to="1"></li>
+		    <li id="carousel5" onclick="carousel_cut(this)" data-slide-to="2"></li>
+		    <li id="carousel6" onclick="carousel_cut(this)" data-slide-to="3"></li>
+	 	</ol>
+	</div>
+	<div id="content3" class="hidden_divs">
+		<div class="contents_div3">
+			<img id="content3_img" src="">
+			<p id="content3_p">web组主要是进行一些网站、Web App相关的开发，同时附带PC端桌面应用的开发;在这里,我们与浏览器为伴，你可以在Web的世界里尽情的创造属于你自己的精彩,用你的智慧和创意来丰富Web世界</p>
+			<div id="contents_div3_p_bg"></div>
+		</div>  
+		<img id="contents_bg_img1" class="contents_bg" src="">
+	</div>
+	<div id="content4" class="hidden_divs">
+		<div class="contents_div4">
+			<img id="content4_img" src="">
+			<p id="content4_p">Android组是基于Android系统, 以实现创意、探索技术为目的的小组。在这里,你可以创造出实用的、小而美的创意型App, 以此来方便和丰富我们的生活。主要方向:校园APP、创意APP、移动互联网客户端。</p>
+			<div id="contents_div4_p_bg"></div>
+		</div>
+		<img id="contents_bg_img2" class="contents_bg" src="">
+	</div>
+	<div id="content5" class="hidden_divs">
+		<div class="contents_div5">
+			<img id="content5_img" src="">
+			<p id="content5_p">design组主要负责为各个项目开发提供所需的界面设计和交互设计(包括 网站、Web App、android App、PC端桌面应用等);在这里，你拥有了施展艺术天赋的机会，期待你鬼斧神工般的设计哦!!!</p>
+			<div id="contents_div5_p_bg"></div>
+		</div>
+		<img id="contents_bg_img3" class="contents_bg" src="">
+	</div>
+	<div id="content6" class="hidden_divs">
+		<div class="contents_div6">
+			<img id="content6_img" src="">
+			<p id="content6_p">算法作为程序的灵魂,扮演着极其重要的角色.IT算法组为你提供一个将你的思想在计算机上实现, 将灵魂赋予程序的机会. 在这里，你也将同时学会在windows和linux上搭建各种开发环境和各种服务器等</p>
+			<div id="contents_div6_p_bg"></div>
+		</div>
+		<img id="contents_bg_img4" class="contents_bg" src="">
+	</div>
+
+	<div id="content7" class="hidden_divs">
+		<!-- 图片轮播 -->
+	    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+		    <!-- 轮播指示的 小圆点 -->
+		    <ol class="carousel-indicators">
+		      	<li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+		      	<li data-target="#carousel-example-generic" data-slide-to="1"></li>
+		      	<li data-target="#carousel-example-generic" data-slide-to="2"></li>
+		      	<li data-target="#carousel-example-generic" data-slide-to="3"></li>
+		      	<li data-target="#carousel-example-generic" data-slide-to="4"></li>
+		      	<li data-target="#carousel-example-generic" data-slide-to="5"></li>
+		      	<li data-target="#carousel-example-generic" data-slide-to="6"></li>
+		      	<li data-target="#carousel-example-generic" data-slide-to="7"></li>
+		    </ol>
+		    <!-- 图片组 -->
+		    <div class="carousel-inner">
+		      	<div class="item active">
+		        	<img id="lazyImg1" src="" alt="">
+		        	<div class="carousel-caption"></div>
+		      	</div>
+		      	<div class="item">
+		        	<img id="lazyImg2" src="" alt="">
+		        	<div class="carousel-caption"></div>
+		      	</div>
+		      	<div class="item">
+		        	<img id="lazyImg3" src="" alt="">
+		        	<div class="carousel-caption"></div>
+		      	</div>
+		      	<div class="item">
+		        	<img id="lazyImg4" src="" alt="">
+		        	<div class="carousel-caption"></div>
+		      	</div>
+		      	<div class="item">
+		        	<img id="lazyImg5" src="" alt="">
+		        	<div class="carousel-caption"></div>
+		      	</div>
+		      	<div class="item">
+		        	<img id="lazyImg6" src="" alt="">
+		        	<div class="carousel-caption"></div>
+		      	</div>
+		      	<div class="item">
+		        	<img id="lazyImg7" src="" alt="">
+		        	<div class="carousel-caption"></div>
+		      	</div>
+		      	<div class="item">
+		        	<img id="lazyImg8" src="" alt="">
+		        	<div class="carousel-caption"></div>
+		      	</div>
+		    </div>
+		    <!-- 图片轮播 控制 -->
+		    <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+		      	<span class="glyphicon glyphicon-chevron-left"></span>
+		    </a>
+		    <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+		      	<span class="glyphicon glyphicon-chevron-right"></span>
+		    </a>
+	  	</div>
+	</div>
+	<div id="content8" class="hidden_divs">
+		<div class="container" id="summary-container1">
+			<form action="./submit.html" method="post">
+				<div class="row">
+		            <div id="container-left" class="col-md-4 col-md-push-2">
+		            	<div id="name">
+					        <span>姓名: </span>
+					        <div class="col-sm-10">
+					          	<input type="text" class="form-control" name="name">
+					        </div>
+					    </div>
+					    <div id="sex">
+					      	<span>性别: </span>
+					      	<div>
+								<input class="sex1" type="radio" name="sex" value="男" checked="checked">  &nbsp;男
+								<input class="sex2" type="radio" name="sex" value="女">  &nbsp;女
+					      	</div>
+				      	</div>
+					    <div id="level">
+					        <span>年级/学部/专业: </span>
+					        <div class="col-sm-10">
+					          	<input type="text" class="form-control" name="level">
+					        </div>
+					    </div>
+					    <div id="phone">
+					        <span>联系方式: </span>
+					        <div class="col-sm-10">
+					          	<input type="text" class="form-control" name="phone">
+					        </div>
+					    </div>
+					    <div id="learn-type">
+					      	<span>报名组别: </span>
+					      	<div>
+								<input class="type1" type="radio" name="type" value="Web组" checked="checked"> Web组
+								<input class="type2" type="radio" name="type" value="Design组"> Design组
+								<br/>
+								<input class="type3" type="radio" name="type" value="Android组"> Android组
+								<input class="type4" type="radio" name="type" value="IT与算法组"> IT与算法组
+					      	</div>
+				      	</div>
+				      	<div id="submit_but">
+				      		<input type="submit" class="btn btn-info" value="提  交">
+				      	</div>
+		            </div>
+		            <div id="container-right" class="col-md-2">
+		            	<textarea rows="10" name="introduce" placeholder="自我介绍一下呗......"></textarea>
+		            	<div>
+		            		<p class="contact_title">联系我们: </p>
+		            		<p><span>王帆: 13396095889</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>潘尚: 13396093456</span></p>
+		            		<p><span>杨焰: 13026129602</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>王伟: 13396094467</span></p>
+		            	</div>
+		            </div> 
+		        </div>
+	        </form>
+		</div>
+	</div>
+
+
+	<script type="text/javascript" src="./js/jquery-1.9.1.js"></script>
+	<script type="text/javascript" src="./bootstrap-3.2.0-dist/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="./js/jquery.mousewheel.js"></script>
+
+	<script type="text/javascript">
+		var img_temp;
+		var img_temp2;
+		//初始化行为
+		function init(){
+			//当前div 为content1
+			current_div= 1;
+			browser_height= $(window).height();
+			browser_width= $(window).width();
+
+			//设置当前菜单项
+			now_menu_item= 1;
+			now_menu= $('#menu' + now_menu_item);
+
+			//图片延迟加载
+			img_temp= setInterval("img_lazy_load()", 4000);
+			img_temp2= setInterval("img_lazy_load2()", 2000);
+		}
+
+		function img_lazy_load(){
+			$("#lazyImg1").attr("src", "./images/nl.jpg");
+			$("#lazyImg2").attr("src", "./images/ls.jpg");
+			$("#lazyImg3").attr("src", "./images/zg.jpg");
+			$("#lazyImg4").attr("src", "./images/xg.jpg");
+			$("#lazyImg5").attr("src", "./images/tsg.jpg");
+			$("#lazyImg6").attr("src", "./images/tp.jpg");
+			$("#lazyImg7").attr("src", "./images/gs.jpg");
+			$("#lazyImg8").attr("src", "./images/oyh.jpg");
+			clearInterval(img_temp);
+		}
+		function img_lazy_load2(){
+			$("#content3_img").attr("src", "./images/Web.png");
+			$("#content4_img").attr("src", "./images/Android.png");
+			$("#content5_img").attr("src", "./images/Design.png");
+			$("#content6_img").attr("src", "./images/IT.png");
+			$("#contents_bg_img1").attr("src", "./images/web_bg.jpg");
+			$("#contents_bg_img2").attr("src", "./images/android_bg.jpg");
+			$("#contents_bg_img3").attr("src", "./images/design_bg.jpg");
+			$("#contents_bg_img4").attr("src", "./images/it_bg.jpg");
+
+			clearInterval(img_temp2);
+		}
+
+		//首页的炫酷效果
+		function mouseover(){
+			$('#animate_img1').removeClass('img1');
+			$('#animate_img1').addClass('img1_2');
+			$('#animate_img2').removeClass('img2');
+			$('#animate_img2').addClass('img2_2');
+			$('#join_us_div').addClass('join_btn join_btn-1 join_btn-1e');
+		}
+		function mouseout(){
+			$('#animate_img1').removeClass('img1_2');
+			$('#animate_img1').addClass('img1');
+			$('#animate_img2').removeClass('img2_2');
+			$('#animate_img2').addClass('img2');
+		}
+
+		var menu_item1; //当前菜单项
+		var obj_item; //下一个菜单项
+		//菜单切换
+		function menus_cut(obj){
+			for(var i=1; i<6; i++){
+				if($('#menu'+i).attr('class') == 'now_menu'){
+					menu_item1= i;
+				}
+			}
+			now_menu.removeClass('now_menu');
+			now_menu.addClass('menus');
+			$(obj).removeClass('menus');
+			$(obj).addClass('now_menu');
+			now_menu= $(obj);
+			for(var i=1; i<6; i++){
+				if($('#menu'+i).attr('class') == 'now_menu'){
+					obj_item= i;
+				}
+			}
+			menus_control_pages_cut();
+		}
+
+		//导航项控制页面切换
+		function menus_control_pages_cut(){
+			if(temp==false){
+				temp= true;	
+				if( (menu_item1==1 || menu_item1==2)&&(obj_item==3) ){
+					current_div= menu_item1;
+					next_div= obj_item;
+					pages_cut2();
+					$('#cut_carousel').removeClass('cut_carousel_hidden');
+					$('#cut_carousel').addClass('cut_carousel_show');
+				}else if( ((menu_item1==1 || menu_item1==2)&&(obj_item==4 || obj_item==5)) ){
+					current_div= menu_item1;
+					next_div= obj_item+3;
+					pages_cut2();
+				}else if( menu_item1==1 && obj_item==2 ){
+					current_div= menu_item1;
+					next_div= obj_item;
+					pages_cut2();
+				}else if( (menu_item1==3)&&(obj_item==4 || obj_item==5) ){
+					//current_div= 6;
+					next_div= obj_item+3;
+					pages_cut2();
+					$('#cut_carousel').removeClass('cut_carousel_show');
+					$('#cut_carousel').addClass('cut_carousel_hidden');
+				}else if( (menu_item1==4)&&(obj_item==5) ){
+					current_div= menu_item1+3;
+					next_div= obj_item+3;
+					pages_cut2();
+				}
+				else if((menu_item1==5 || menu_item1==4)&&(obj_item==3)){ //向下切换
+					current_div= menu_item1+3;
+					next_div= 6;
+					pages_cut3();
+					$('#cut_carousel').removeClass('cut_carousel_hidden');
+					$('#cut_carousel').addClass('cut_carousel_show');
+				}else if(((menu_item1==5 || menu_item1==4)&&(obj_item==2 || obj_item==1))){
+					current_div= menu_item1+3;
+					next_div= obj_item;
+					pages_cut3();
+				}else if(menu_item1==5 && obj_item==4){
+					current_div= menu_item1+3;
+					next_div= obj_item+3;
+					pages_cut3();
+				}else if((menu_item1==3)&&(obj_item==2 || obj_item==1)){
+					//current_div= 6;
+					next_div= obj_item;
+					pages_cut3();
+					$('#cut_carousel').removeClass('cut_carousel_show');
+					$('#cut_carousel').addClass('cut_carousel_hidden');
+				}else if((menu_item1==2)&&(obj_item==1)){
+					current_div= menu_item1;
+					next_div= obj_item;
+					pages_cut3();
+				}else{
+					temp= false;	
+				}
+			}
+		}
+		function pages_cut2(){
+			$("#content"+current_div).animate({top: browser_height+"px", left: '0px'}, 600, function(){
+				$("#content"+current_div).removeClass('show_div');
+				$("#content"+current_div).addClass('hidden_divs');
+			});
+					
+			$("#content"+next_div).removeClass('hidden_divs');
+			$("#content"+next_div).addClass('show_div');
+			$("#content"+next_div).css({top: "-"+browser_height+"px", left: '0px'});
+			$("#content"+next_div).animate({top: "0px"}, 600, function(){
+				temp= false;
+				current_div= next_div;
+			});
+		}
+		function pages_cut3(){
+			$("#content"+current_div).animate({top: "-"+browser_height+"px", left: '0px'}, 600, function(){
+				$("#content"+current_div).removeClass('show_div');
+				$("#content"+current_div).addClass('hidden_divs');
+			});
+					
+			$("#content"+next_div).removeClass('hidden_divs');
+			$("#content"+next_div).addClass('show_div');
+			$("#content"+next_div).css({top: browser_height+"px", left: '0px'});
+			$("#content"+next_div).animate({top: "0px"}, 600, function(){
+				temp= false;
+				current_div= next_div;
+			});
+		}
+
+
+
+		function icon_show3(){
+			$('#content3_img').animate({left: "300px"}, 500);
+		}
+		function p_show3(){
+			$('#content3_p').animate({left: "700px"}, 500, function(){
+				$('#contents_div3_p_bg').css({display: 'block'});
+			});
+		}
+
+		function icon_show4(){
+			$('#content4_img').animate({left: "200px"}, 500);
+		}
+		function p_show4(){
+			$('#content4_p').animate({left: "800px"}, 500, function(){
+				$('#contents_div4_p_bg').css({display: 'block'});
+			});
+		}
+
+		function icon_show5(){
+			$('#content5_img').animate({left: "450px"}, 500);
+		}
+		function p_show5(){
+			$('#content5_p').animate({left: "460px"}, 500, function(){
+				$('#contents_div5_p_bg').css({display: 'block'});
+			});
+		}
+
+		function icon_show6(){
+			$('#content6_img').animate({left: "450px"}, 500);
+		}
+		function p_show6(){
+			$('#content6_p').animate({left: "700px"}, 500, function(){
+				$('#contents_div6_p_bg').css({display: 'block'});
+			});
+		}
+
+		//加入我们
+		function joinUs(){
+			if(temp==false){
+				temp= true;	
+
+				current_div= 1;
+				next_div= 8;
+				pages_cut4();
+
+				now_menu.removeClass('now_menu');
+				now_menu.addClass('menus');
+				$("#menu5").removeClass('menus');
+				$("#menu5").addClass('now_menu');
+				now_menu= $("#menu5");
+			}
+			
+		}
+		function pages_cut4(){
+			$("#content"+current_div).animate({top: browser_height+"px", left: '0px'}, 600, function(){
+				$("#content"+current_div).removeClass('show_div');
+				$("#content"+current_div).addClass('hidden_divs');
+			});
+					
+			$("#content"+next_div).removeClass('hidden_divs');
+			$("#content"+next_div).addClass('show_div');
+			$("#content"+next_div).css({top: "-"+browser_height+"px", left: '0px'});
+			$("#content"+next_div).animate({top: "0px"}, 600, function(){
+				temp= false;
+				current_div= next_div;
+			});
+		}
+		
+
+
+
+		function carousel_cut(obj){
+			for(var i=3; i<7; i++){
+				if($('#carousel'+i).attr('class') == 'active'){
+					now_carousel_item= i;
+				}
+			}
+			$('#carousel'+now_carousel_item).removeClass('active');
+			$(obj).addClass('active');
+
+			for(var i=3; i<7; i++){
+				if($('#carousel'+i).attr('class') == 'active'){
+					next_div= i;
+				}
+			}
+			current_div= now_carousel_item;
+			page_scroll();
+		}
+
+
+		jQuery(function($) {
+		    $(window).bind('mousewheel', function(event, delta) {
+					//当前是否正在进行页面滚动
+					if(!temp){
+						//判断向上还是向下
+		            	direction= delta > 0? 1:2;
+
+						if(direction == 2){ //向下
+							if(current_div < 8){
+								next_div= current_div+1;
+								page_scroll();
+								temp= true;	
+							}
+						}else if(direction == 1){ //向上
+							if(current_div > 1){
+								next_div= current_div-1;
+								page_scroll();
+								temp= true;	
+							}
+						}
+					}
+		        });
+		});
+
+		function page_scroll(){
+			if( (current_div < 3 && direction == 2) || (current_div > 5 && direction == 2) || (current_div < 4 && direction == 1) || (current_div > 6  && direction == 1) ){
+
+				if(current_div > next_div){
+					if(current_div == 3){
+						now_menu.removeClass('now_menu');
+						now_menu.addClass('menus');
+						$('#menu2').removeClass('menus');
+						$('#menu2').addClass('now_menu');
+						now_menu= $('#menu2');
+					}else if(current_div == 2){
+						now_menu.removeClass('now_menu');
+						now_menu.addClass('menus');
+						$('#menu1').removeClass('menus');
+						$('#menu1').addClass('now_menu');
+						now_menu= $('#menu1');
+					}
+					else if(current_div == 8){
+						now_menu.removeClass('now_menu');
+						now_menu.addClass('menus');
+						$('#menu4').removeClass('menus');
+						$('#menu4').addClass('now_menu');
+						now_menu= $('#menu4');
+					}
+					else if(current_div == 7){
+						now_menu.removeClass('now_menu');
+						now_menu.addClass('menus');
+						$('#menu3').removeClass('menus');
+						$('#menu3').addClass('now_menu');
+						now_menu= $('#menu3');
+					}
+
+					$("#content"+current_div).animate({top: browser_height+"px", left: '0px'}, 600, function(){
+						$("#content"+current_div).removeClass('show_div');
+						$("#content"+current_div).addClass('hidden_divs');
+					});
+					
+					$("#content"+next_div).removeClass('hidden_divs');
+					$("#content"+next_div).addClass('show_div');
+					$("#content"+next_div).css({top: "-"+browser_height+"px", left: '0px'});
+					$("#content"+next_div).animate({top: "0px"}, 600, function(){
+						temp= false;
+						current_div= next_div;
+
+						//控制小圆圈的消失和出现
+						if(next_div>=3 && next_div<=6){
+							$('#cut_carousel').removeClass('cut_carousel_hidden');
+							$('#cut_carousel').addClass('cut_carousel_show');
+						}else{
+							$('#cut_carousel').removeClass('cut_carousel_show');
+							$('#cut_carousel').addClass('cut_carousel_hidden');
+						}
+					});
+				}else{
+					if(current_div == 1){
+						now_menu.removeClass('now_menu');
+						now_menu.addClass('menus');
+						$('#menu2').removeClass('menus');
+						$('#menu2').addClass('now_menu');
+						now_menu= $('#menu2');
+					}else if(current_div == 2){
+						now_menu.removeClass('now_menu');
+						now_menu.addClass('menus');
+						$('#menu3').removeClass('menus');
+						$('#menu3').addClass('now_menu');
+						now_menu= $('#menu3');
+					}else if(current_div == 6){
+						now_menu.removeClass('now_menu');
+						now_menu.addClass('menus');
+						$('#menu4').removeClass('menus');
+						$('#menu4').addClass('now_menu');
+						now_menu= $('#menu4');
+					}else if(current_div == 7){
+						now_menu.removeClass('now_menu');
+						now_menu.addClass('menus');
+						$('#menu5').removeClass('menus');
+						$('#menu5').addClass('now_menu');
+						now_menu= $('#menu5');
+					}
+
+					$("#content"+current_div).animate({top: "-"+browser_height+"px", left: '0px'}, 600, function(){
+						$("#content"+current_div).removeClass('show_div');
+						$("#content"+current_div).addClass('hidden_divs');
+					});
+				
+					$("#content"+next_div).removeClass('hidden_divs');
+					$("#content"+next_div).addClass('show_div');
+					$("#content"+next_div).css({top: browser_height+"px", left: '0px'});
+					$("#content"+next_div).animate({top: "0px"}, 600, function(){
+						if(current_div == 2){
+							$('#content3_img').css({display: "block"});
+							$('#content3_p').css({display: "block"});
+							icon_show3();
+							p_show3();
+						}
+						temp= false;
+						current_div= next_div;
+
+						//控制小圆圈的消失和出现
+						if(next_div>=3 && next_div<=6){
+							$('#cut_carousel').removeClass('cut_carousel_hidden');
+							$('#cut_carousel').addClass('cut_carousel_show');
+						}else{
+							$('#cut_carousel').removeClass('cut_carousel_show');
+							$('#cut_carousel').addClass('cut_carousel_hidden');
+						}
+					});
+				}
+			}else{
+				now_menu.removeClass('now_menu');
+				now_menu.addClass('menus');
+
+				$('#menu3').removeClass('menus');
+				$('#menu3').addClass('now_menu');
+				now_menu= $('#menu3');
+
+				if(current_div > next_div){
+					$("#content"+current_div).animate({top: "0px", left: browser_width+"px"}, 600, function(){
+						$("#content"+current_div).removeClass('show_div');
+						$("#content"+current_div).addClass('hidden_divs');
+					});
+					
+					$("#content"+next_div).removeClass('hidden_divs');
+					$("#content"+next_div).addClass('show_div');
+					$("#content"+next_div).css({top: "0px", left: "-"+browser_width+"px"});
+					$("#content"+next_div).animate({left: "0px"}, 600, function(){
+						temp= false;
+						//控制小圆圈的焦点移动
+						if(next_div>=3 && next_div<=6){
+							$('#carousel'+current_div).removeClass('active');
+							$('#carousel'+next_div).addClass('active');
+						}
+						current_div= next_div;
+					});
+				}else{
+
+					$("#content"+current_div).animate({top: "0px", left: "-"+browser_width+"px"}, 600, function(){
+						$("#content"+current_div).removeClass('show_div');
+						$("#content"+current_div).addClass('hidden_divs');
+					});
+				
+					$("#content"+next_div).removeClass('hidden_divs');
+					$("#content"+next_div).addClass('show_div');
+					$("#content"+next_div).css({top: "0px", left: browser_width+"px"});
+					$("#content"+next_div).animate({left: "0px"}, 600, function(){
+						if(current_div == 3){
+							$('#content4_img').css({display: "block"});
+							$('#content4_p').css({display: "block"});
+							icon_show4();
+							p_show4();
+						}else if(current_div == 4){
+							$('#content5_img').css({display: "block"});
+							$('#content5_p').css({display: "block"});
+							icon_show5();
+							p_show5();
+						}else if(current_div == 5){
+							$('#content6_img').css({display: "block"});
+							$('#content6_p').css({display: "block"});
+							icon_show6();
+							p_show6();
+						}
+						temp= false;
+						//控制小圆圈的焦点移动
+						if(next_div>=3 && next_div<=6){
+							$('#carousel'+current_div).removeClass('active');
+							$('#carousel'+next_div).addClass('active');
+						}
+						current_div= next_div;
+					});
+				}
+			}	
+		}
+	</script>
+</body>
+</html>
